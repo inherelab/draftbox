@@ -49,14 +49,15 @@ func DefaultConfig() *Config {
 type User struct {
 	ID   string `json:"id"`
 	Name string `json:"name"`
+	// extra info
+	Ext map[string]interface{} `json:"ext"`
 	// other
-	Extra   interface{} `json:"extra"`
-	LoginAt time.Time   `json:"login_at"`
+	LoginAt time.Time `json:"login_at"`
 }
 
 // SessionID generate
 func (u *User) SessionID(prefix string) string {
-	sid := genMd5(fmt.Sprintf("%s%s%v", u.ID, u.Name, u.Extra))
+	sid := genMd5(fmt.Sprintf("%s%s%v", u.ID, u.Name, u.Ext))
 	if prefix != "" {
 		return prefix + ":" + sid
 	}
@@ -94,8 +95,8 @@ func NewDefault() *Manager {
 }
 
 // Login for a user
-func (m *Manager) Login(id, name string, extra interface{}) (sid string, err error) {
-	user := &User{ID: id, Name: name, Extra: extra, LoginAt: time.Now()}
+func (m *Manager) Login(id, name string, ext map[string]interface{}) (sid string, err error) {
+	user := &User{ID: id, Name: name, Ext: ext, LoginAt: time.Now()}
 
 	// storage
 	sid = user.SessionID(m.cfg.KeyPrefix)
@@ -116,7 +117,7 @@ func (m *Manager) User(sid string) *User {
 }
 
 // Can check current user can access the permission
-func (m *Manager) ID() string {
+func (m *Manager) ID(uid string) string {
 	user := m.Store.Get(m.cfg.SessionKey).(*User)
 
 	return user.ID
