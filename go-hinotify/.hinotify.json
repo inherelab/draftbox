@@ -1,0 +1,11 @@
+{
+  "dir": "./",
+  "watchDir": "./",
+  "ext": ".go|.json",
+  "tasks": {
+    "test-task": [
+      "echo hello",
+      "echo $0"
+    ]
+  }
+}

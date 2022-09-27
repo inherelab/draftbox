@@ -1,0 +1,4 @@
+# ghbot
+
+bot for github
+
