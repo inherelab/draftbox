@@ -11,10 +11,11 @@ name:
 
 ## process manager
 
-local process manager. like pm, suppviser 
+local process manager. like pm2, supervisor 
 
 name:
-- process manager - pm, procm
+- process manager - pm, procm, **pmx**
 - keep proc live - kpl, pkl
 - gopm
-- proc 
+- process daemon - pd, procd
+- supper process - supp
